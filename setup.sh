@@ -62,6 +62,7 @@ make
 make install
 cd ..
 rm -rf mpg123-1.25.8
+rm mpg123-1.25.8.tar.bz2
 
 # set config
 echo "/usr/local/lib" > /etc/ld.so.conf.d/locallib.conf
@@ -92,6 +93,23 @@ echo
 # install
 apt-get --yes --force-yes install network-manager
 rm /etc/network/interfaces
+
+# Radio
+echo
+echo "Setup Radio..."
+echo
+
+# additional packages
+apt-get --yes --force-yes install python-requests mtdev-tools
+
+# add systemd services
+cd systemd
+cp mp3pi.service /etc/systemd/system
+cp pulseaudio.service /etc/systemd/system
+
+# enable systemd service
+systemctl enable mp3pi
+systemctl enable pulseaudio
 
 # Reboot
 echo "Done."
